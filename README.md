@@ -24,6 +24,7 @@ Como iniciar
     1. Faça um fork deste projeto.
     2. Inicie todo o codigo do seu projeto dentro dessa pasta.
     3. Escreva um arquivo Instrucoes.md, explicando como rodar o seu projeto.
+    4. Publique no github.
 
 O que será avaliado
 
