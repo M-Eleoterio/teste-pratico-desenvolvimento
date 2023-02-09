@@ -25,8 +25,8 @@ public class Produtos extends javax.swing.JFrame {
         initComponents();
         
         String url="jdbc:mysql://localhost/beto_celulares";
-        String user="root";
-        String pass="Eleoterio2327!";
+        String user="******";
+        String pass="******";
         try{
                con = DriverManager.getConnection(url,user,pass);
         }catch(Exception excecao){

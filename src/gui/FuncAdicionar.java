@@ -22,9 +22,9 @@ public class FuncAdicionar extends javax.swing.JFrame {
     public FuncAdicionar() {
         initComponents();
         
-        String url="jdbc:mysql://localhost/beto_celulares";
-        String user="root";
-        String pass="Eleoterio2327!";
+        String url="jdbc:mysql://localhost/******";
+        String user="******";
+        String pass="******";
         try{
                con = DriverManager.getConnection(url,user,pass);
         }catch(Exception excecao){
