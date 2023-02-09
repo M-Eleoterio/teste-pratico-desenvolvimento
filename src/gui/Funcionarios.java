@@ -136,17 +136,24 @@ public class Funcionarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        JFrame janela = new FuncAdd();
+        setVisible(false);
+        JFrame janela = new FuncAdicionar();
         janela.setVisible(true);
         janela.setResizable(false);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        JFrame janela = new Produtos();
+        janela.setVisible(true);
+        janela.setResizable(false);
     }//GEN-LAST:event_btnVerActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         dispose();
+        JFrame menu = new Menu();
+        menu.setVisible(true);
+        menu.setResizable(false);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**

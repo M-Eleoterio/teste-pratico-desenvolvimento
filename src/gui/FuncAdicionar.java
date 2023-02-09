@@ -5,17 +5,31 @@
  */
 package gui;
 
+import javax.swing.JFrame;
+import dao.FuncAddDAO;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import modelo.FuncAdd;
+
 /**
  *
  * @author asa40
  */
-public class FuncAdd extends javax.swing.JFrame {
+public class FuncAdicionar extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FuncAdd
-     */
-    public FuncAdd() {
+    Connection con;
+    
+    public FuncAdicionar() {
         initComponents();
+        
+        String url="jdbc:mysql://localhost/beto_celulares";
+        String user="root";
+        String pass="Eleoterio2327!";
+        try{
+               con = DriverManager.getConnection(url,user,pass);
+        }catch(Exception excecao){
+            System.out.println("Erro: " + excecao.getMessage());
+        }
     }
 
     /**
@@ -36,6 +50,7 @@ public class FuncAdd extends javax.swing.JFrame {
         txtValor = new javax.swing.JTextField();
         lblCadastro = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
+        lblResposta = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblRemvoer = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
@@ -79,6 +94,13 @@ public class FuncAdd extends javax.swing.JFrame {
         btnCadastrar.setBorder(null);
         btnCadastrar.setBorderPainted(false);
         btnCadastrar.setFocusable(false);
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
+
+        lblResposta.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -87,24 +109,25 @@ public class FuncAdd extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(32, 32, 32)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblAno)
-                                    .addComponent(lblValor)
-                                    .addComponent(lblModelo)))))
+                            .addComponent(lblAno)
+                            .addComponent(lblValor)
+                            .addComponent(lblModelo)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(118, 118, 118)
                         .addComponent(lblCadastro))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,7 +148,9 @@ public class FuncAdd extends javax.swing.JFrame {
                 .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(170, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(155, 0, 0));
@@ -147,6 +172,11 @@ public class FuncAdd extends javax.swing.JFrame {
         btnCadastrar1.setBorder(null);
         btnCadastrar1.setBorderPainted(false);
         btnCadastrar1.setFocusable(false);
+        btnCadastrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrar1ActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setBackground(new java.awt.Color(255, 255, 255));
         btnVoltar.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
@@ -163,24 +193,24 @@ public class FuncAdd extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(123, 123, 123)
                         .addComponent(lblRemvoer))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addGap(23, 23, 23)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblId)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
+                        .addGap(73, 73, 73)
                         .addComponent(btnCadastrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +221,7 @@ public class FuncAdd extends javax.swing.JFrame {
                 .addComponent(lblId)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(btnCadastrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,8 +254,36 @@ public class FuncAdd extends javax.swing.JFrame {
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         dispose();
+        JFrame func = new Funcionarios();
+        func.setVisible(true);
+        func.setResizable(false);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        
+        FuncAdd funcadiciona = new FuncAdd();
+        funcadiciona.setNome_produto(txtModelo.getText());
+        funcadiciona.setAno_produto(txtAno.getText());
+        funcadiciona.setValor_produto(txtValor.getText());
+        
+        if ((txtModelo.getText().isEmpty()) || (txtAno.getText().isEmpty()) || (txtValor.getText().isEmpty())) {
+         lblResposta.setText("Erro! Preencha TODOS os campos!");
+     
+        }
+        else {
+         // instanciando a classe UsuarioDAO do pacote dao e criando seu objeto dao
+        FuncAddDAO dao = new FuncAddDAO();
+         dao.adiciona(funcadiciona);
+         lblResposta.setText("Modelo cadastrado no sistema.");
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnCadastrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrar1ActionPerformed
+        String sql="SELECT * FROM produto";
+    }//GEN-LAST:event_btnCadastrar1ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
     /**
      * @param args the command line arguments
      */
@@ -243,20 +301,21 @@ public class FuncAdd extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncAdicionar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FuncAdd().setVisible(true);
+                new FuncAdicionar().setVisible(true);
             }
         });
     }
@@ -272,10 +331,12 @@ public class FuncAdd extends javax.swing.JFrame {
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblRemvoer;
+    private javax.swing.JLabel lblResposta;
     private javax.swing.JLabel lblValor;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
+
 }

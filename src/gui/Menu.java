@@ -135,9 +135,11 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_FuncionarioActionPerformed
+        setVisible(false);
         JFrame janela = new Funcionarios();
         janela.setVisible(true);
         janela.setResizable(false);
+        
     }//GEN-LAST:event_btn_FuncionarioActionPerformed
 
     /**
