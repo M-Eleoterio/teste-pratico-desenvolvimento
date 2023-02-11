@@ -10,16 +10,16 @@ package modelo;
  * @author asa40
  */
 public class FuncAdd {
-    Long id_produto;
+    String id_produto;
     String nome_produto;
     String ano_produto;
     String valor_produto;
 
-    public Long getId_produto() {
+    public String getId_produto() {
         return id_produto;
     }
 
-    public void setId_produto(Long id_produto) {
+    public void setId_produto(String id_produto) {
         this.id_produto = id_produto;
     }
 
