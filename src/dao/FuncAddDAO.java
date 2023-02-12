@@ -1,12 +1,12 @@
 package dao;
 import factory.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import modelo.FuncAdd;
 import modelo.FuncRmv;
+import modelo.ProdAdd;
 
 public class FuncAddDAO {
    private Connection connection;
@@ -46,8 +46,8 @@ public class FuncAddDAO {
             }
         }
     
-    public void pedido(FuncAdd p) {
-        String sql = "insert into pedido(nome_produto, ano_produto, valor_produto)values (?, ?, ?)";
+    public void pedido(ProdAdd p) {
+        String sql = "insert into pedido(nome_produto, ano_produto, valor_produto)values(?,?,?)";
         try {                
                 
                 PreparedStatement stmt = connection.prepareStatement(sql);
@@ -55,13 +55,27 @@ public class FuncAddDAO {
                 stmt.setString(2, p.getAno_produto());
                 stmt.setString(3, p.getValor_produto());
 
-                stmt.execute();
+                stmt.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Produto adquirido! Acesse sua lista de pedidos para revê-lo.");
                 stmt.close();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
     }
+    
+    public void removerp(FuncRmv rp) { 
+         String sql = "DELETE FROM pedido WHERE id_produto = ?";
+         try {
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             stmt.setString(1, rp.getId_produto());
+             stmt.executeUpdate();
+             JOptionPane.showMessageDialog(null, "Produto removido.");
+             stmt.close();
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, "Erro: " + e);
+             throw new RuntimeException(e);
+            }
+        }
 }
     
        

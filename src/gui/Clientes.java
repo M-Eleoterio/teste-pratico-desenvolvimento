@@ -139,7 +139,10 @@ public class Clientes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        // TODO add your handling code here:
+        setVisible(false);
+        JFrame janela = new Pedidos();
+        janela.setVisible(true);
+        janela.setResizable(false);
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed

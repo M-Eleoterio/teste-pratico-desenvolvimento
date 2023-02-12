@@ -5,37 +5,35 @@
  */
 package gui;
 
-/**
- *
- * @author Eleotério
- */
-
 import dao.FuncAddDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.ProdAdd;
+import modelo.FuncRmv;
 
-public class Produtos extends javax.swing.JFrame {
-    
+/**
+ *
+ * @author asa40
+ */
+public class Pedidos extends javax.swing.JFrame {
+
     Connection con = null;
-    public Produtos() {
-        initComponents();
-        
+    public Pedidos() {
+        initComponents();        
         try{
                con = DriverManager.getConnection("jdbc:mysql://localhost/beto_celulares","root","Eleoterio2327!");
         }catch(Exception excecao){
             System.out.println("Erro: " + excecao.getMessage());
         }
-        String sql="SELECT * FROM produto";
+       String sql="SELECT * FROM pedido";
         try{
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) jTableProd.getModel();
             modelo.setRowCount(0);
             while(rs.next()){
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
@@ -58,9 +56,9 @@ public class Produtos extends javax.swing.JFrame {
         lblAreadoCliente = new javax.swing.JLabel();
         btnRecarregar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        JtabelProd = new javax.swing.JScrollPane();
-        tblProd = new javax.swing.JTable();
-        btnComprar = new javax.swing.JButton();
+        tblProd = new javax.swing.JScrollPane();
+        jTableProd = new javax.swing.JTable();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,7 +66,7 @@ public class Produtos extends javax.swing.JFrame {
 
         lblAreadoCliente.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         lblAreadoCliente.setForeground(new java.awt.Color(255, 255, 255));
-        lblAreadoCliente.setText("LISTA DE PRODUTOS");
+        lblAreadoCliente.setText("LISTA DE PEDIDOS");
 
         btnRecarregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Recarregar.png"))); // NOI18N
         btnRecarregar.setBorderPainted(false);
@@ -90,8 +88,8 @@ public class Produtos extends javax.swing.JFrame {
             }
         });
 
-        tblProd.setBorder(null);
-        tblProd.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProd.setBorder(null);
+        jTableProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -102,25 +100,37 @@ public class Produtos extends javax.swing.JFrame {
                 "Modelo", "Ano de Lançamento", "Valor"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        JtabelProd.setViewportView(tblProd);
+        tblProd.setViewportView(jTableProd);
+        if (jTableProd.getColumnModel().getColumnCount() > 0) {
+            jTableProd.getColumnModel().getColumn(0).setResizable(false);
+            jTableProd.getColumnModel().getColumn(1).setResizable(false);
+            jTableProd.getColumnModel().getColumn(2).setResizable(false);
+        }
 
-        btnComprar.setBackground(new java.awt.Color(0, 102, 0));
-        btnComprar.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        btnComprar.setForeground(new java.awt.Color(255, 255, 255));
-        btnComprar.setText("COMPRAR");
-        btnComprar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnComprar.setFocusable(false);
-        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(153, 0, 0));
+        btnCancelar.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setText("CANCELAR COMPRA");
+        btnCancelar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCancelar.setFocusable(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComprarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -129,37 +139,35 @@ public class Produtos extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 136, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblAreadoCliente)
                 .addGap(142, 142, 142))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tblProd, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRecarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(181, 181, 181)
-                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(JtabelProd, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(164, 164, 164)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(lblAreadoCliente)
-                .addGap(16, 16, 16)
-                .addComponent(JtabelProd, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(29, 29, 29)
+                .addComponent(tblProd, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRecarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(103, 103, 103)
+                    .addComponent(btnRecarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -177,11 +185,11 @@ public class Produtos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecarregarActionPerformed
-      String sql="SELECT * FROM produto";
+        String sql="SELECT * FROM pedido";
         try{
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) jTableProd.getModel();
             modelo.setRowCount(0);
             while(rs.next()){
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
@@ -198,28 +206,19 @@ public class Produtos extends javax.swing.JFrame {
         func.setResizable(false);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        if (tblProd.getSelectedRow() != -1) {
-          try {
-            ProdAdd pa = new ProdAdd();
-            pa.setNome_produto((String) tblProd.getValueAt(tblProd.getSelectedRow(), 0));
-            pa.setAno_produto((String) tblProd.getValueAt(tblProd.getSelectedRow(), 1));
-            pa.setValor_produto((String) tblProd.getValueAt(tblProd.getSelectedRow(), 2));
-
-            FuncAddDAO dao = new FuncAddDAO();
-            dao.pedido(pa);
-          }catch(Exception excecao){
-            System.out.println("Erro: " + excecao.getMessage());
-        }
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Selecione um produto para comprar.");
-        }
-        String sql="SELECT * FROM produto";
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    if (jTableProd.getSelectedRow() != -1) {
+        
+        FuncRmv fa = new FuncRmv();
+        FuncAddDAO dao = new FuncAddDAO();
+        
+        fa.setId_produto((String) jTableProd.getValueAt(jTableProd.getSelectedRow(), 0));
+        dao.removerp(fa);
+        String sql="SELECT * FROM pedido";
         try{
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) jTableProd.getModel();
             modelo.setRowCount(0);
             while(rs.next()){
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
@@ -227,7 +226,11 @@ public class Produtos extends javax.swing.JFrame {
         }catch(Exception excecao){
             System.out.println("Erro: " + excecao.getMessage());
         }
-    }//GEN-LAST:event_btnComprarActionPerformed
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Selecione um produto para excluir.");
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,32 +249,31 @@ public class Produtos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Produtos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Produtos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Produtos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Produtos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Pedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Produtos().setVisible(true);
+                new Pedidos().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane JtabelProd;
-    private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRecarregar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTable jTableProd;
     private javax.swing.JLabel lblAreadoCliente;
-    private javax.swing.JTable tblProd;
+    private javax.swing.JScrollPane tblProd;
     // End of variables declaration//GEN-END:variables
-
-
+}

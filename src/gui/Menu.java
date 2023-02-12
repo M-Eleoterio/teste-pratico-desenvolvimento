@@ -33,7 +33,6 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         btn_Cliente = new javax.swing.JButton();
         btn_Funcionario = new javax.swing.JButton();
-        btn_SaibaMais = new javax.swing.JButton();
         lbl_byEleoterio = new javax.swing.JLabel();
         lbl_Prosseguir = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -49,6 +48,11 @@ public class Menu extends javax.swing.JFrame {
         btn_Cliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btn_Cliente.setBorderPainted(false);
         btn_Cliente.setFocusPainted(false);
+        btn_Cliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ClienteActionPerformed(evt);
+            }
+        });
 
         btn_Funcionario.setBackground(new java.awt.Color(255, 255, 255));
         btn_Funcionario.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
@@ -61,13 +65,6 @@ public class Menu extends javax.swing.JFrame {
                 btn_FuncionarioActionPerformed(evt);
             }
         });
-
-        btn_SaibaMais.setBackground(new java.awt.Color(255, 255, 255));
-        btn_SaibaMais.setFont(new java.awt.Font("Bahnschrift", 1, 12)); // NOI18N
-        btn_SaibaMais.setText("SAIBA MAIS SOBRE");
-        btn_SaibaMais.setBorder(null);
-        btn_SaibaMais.setBorderPainted(false);
-        btn_SaibaMais.setFocusPainted(false);
 
         lbl_byEleoterio.setForeground(new java.awt.Color(204, 204, 204));
         lbl_byEleoterio.setText("by: Eleotério");
@@ -91,8 +88,7 @@ public class Menu extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btn_Funcionario, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_SaibaMais, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btn_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,9 +109,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(btn_Cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_Funcionario, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_SaibaMais, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 191, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
                 .addComponent(lbl_byEleoterio)
                 .addGap(12, 12, 12))
         );
@@ -141,6 +135,13 @@ public class Menu extends javax.swing.JFrame {
         janela.setResizable(false);
         
     }//GEN-LAST:event_btn_FuncionarioActionPerformed
+
+    private void btn_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ClienteActionPerformed
+        setVisible(false);
+        JFrame janela = new Clientes();
+        janela.setVisible(true);
+        janela.setResizable(false);
+    }//GEN-LAST:event_btn_ClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,7 +181,6 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Cliente;
     private javax.swing.JButton btn_Funcionario;
-    private javax.swing.JButton btn_SaibaMais;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_Prosseguir;
