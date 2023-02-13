@@ -9,7 +9,6 @@ package gui;
  *
  * @author Eleotério
  */
-
 import dao.FuncAddDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,29 +17,31 @@ import java.sql.PreparedStatement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.HistVend;
 import modelo.ProdAdd;
 
 public class Produtos extends javax.swing.JFrame {
-    
+
     Connection con = null;
+
     public Produtos() {
         initComponents();
-        
-        try{
-               con = DriverManager.getConnection("jdbc:mysql://localhost/beto_celulares","root","Eleoterio2327!");
-        }catch(Exception excecao){
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost/beto_celulares", "root", "");
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
-        String sql="SELECT * FROM produto";
-        try{
+        String sql = "SELECT * FROM produto";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
             modelo.setRowCount(0);
-            while(rs.next()){
+            while (rs.next()) {
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
             }
-        }catch(Exception excecao){
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
     }
@@ -93,18 +94,25 @@ public class Produtos extends javax.swing.JFrame {
         tblProd.setBorder(null);
         tblProd.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Modelo", "Ano de Lançamento", "Valor"
+                "ID", "Modelo", "Ano de lançamento", "Valor"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -177,16 +185,16 @@ public class Produtos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecarregarActionPerformed
-      String sql="SELECT * FROM produto";
-        try{
+        String sql = "SELECT * FROM produto";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
             modelo.setRowCount(0);
-            while(rs.next()){
+            while (rs.next()) {
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
             }
-        }catch(Exception excecao){
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
     }//GEN-LAST:event_btnRecarregarActionPerformed
@@ -196,35 +204,48 @@ public class Produtos extends javax.swing.JFrame {
         JFrame func = new Clientes();
         func.setVisible(true);
         func.setResizable(false);
+        func.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         if (tblProd.getSelectedRow() != -1) {
-          try {
-            ProdAdd pa = new ProdAdd();
-            pa.setNome_produto((String) tblProd.getValueAt(tblProd.getSelectedRow(), 0));
-            pa.setAno_produto((String) tblProd.getValueAt(tblProd.getSelectedRow(), 1));
-            pa.setValor_produto((String) tblProd.getValueAt(tblProd.getSelectedRow(), 2));
+            try {
+                ProdAdd pa = new ProdAdd();
+                pa.setNome_pedido((String) tblProd.getValueAt(tblProd.getSelectedRow(), 0));
+                pa.setAno_pedido((String) tblProd.getValueAt(tblProd.getSelectedRow(), 1));
+                pa.setValor_pedido((String) tblProd.getValueAt(tblProd.getSelectedRow(), 2));
+                pa.setStatus_pedido((String) tblProd.getValueAt(tblProd.getSelectedRow(), 3));
 
-            FuncAddDAO dao = new FuncAddDAO();
-            dao.pedido(pa);
-          }catch(Exception excecao){
-            System.out.println("Erro: " + excecao.getMessage());
-        }
-        }
-        else {
+                FuncAddDAO dao = new FuncAddDAO();
+                dao.pedido(pa);
+            } catch (Exception excecao) {
+                System.out.println("Erro: " + excecao.getMessage());
+            }
+            try {
+                HistVend hv = new HistVend();
+                hv.setNome_historico((String) tblProd.getValueAt(tblProd.getSelectedRow(), 0));
+                hv.setAno_historico((String) tblProd.getValueAt(tblProd.getSelectedRow(), 1));
+                hv.setValor_historico((String) tblProd.getValueAt(tblProd.getSelectedRow(), 2));
+
+
+                FuncAddDAO dao = new FuncAddDAO();
+                dao.historico(hv);
+            } catch (Exception excecao) {
+                System.out.println("Erro: " + excecao.getMessage());
+            }
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto para comprar.");
-        }
-        String sql="SELECT * FROM produto";
-        try{
+        }    
+        String sql = "SELECT * FROM produto";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
             modelo.setRowCount(0);
-            while(rs.next()){
+            while (rs.next()) {
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
             }
-        }catch(Exception excecao){
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
     }//GEN-LAST:event_btnComprarActionPerformed

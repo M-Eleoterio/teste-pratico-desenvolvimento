@@ -22,23 +22,24 @@ import modelo.FuncRmv;
 public class Pedidos extends javax.swing.JFrame {
 
     Connection con = null;
+
     public Pedidos() {
-        initComponents();        
-        try{
-               con = DriverManager.getConnection("jdbc:mysql://localhost/beto_celulares","root","Eleoterio2327!");
-        }catch(Exception excecao){
+        initComponents();
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost/beto_celulares", "root", "");
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
-       String sql="SELECT * FROM pedido";
-        try{
+        String sql = "SELECT * FROM pedido";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) jTableProd.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
             modelo.setRowCount(0);
-            while(rs.next()){
+            while (rs.next()) {
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
             }
-        }catch(Exception excecao){
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
     }
@@ -56,9 +57,9 @@ public class Pedidos extends javax.swing.JFrame {
         lblAreadoCliente = new javax.swing.JLabel();
         btnRecarregar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        tblProd = new javax.swing.JScrollPane();
-        jTableProd = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProd = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,40 +89,6 @@ public class Pedidos extends javax.swing.JFrame {
             }
         });
 
-        jTableProd.setBorder(null);
-        jTableProd.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Modelo", "Ano de Lançamento", "Valor"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblProd.setViewportView(jTableProd);
-        if (jTableProd.getColumnModel().getColumnCount() > 0) {
-            jTableProd.getColumnModel().getColumn(0).setResizable(false);
-            jTableProd.getColumnModel().getColumn(1).setResizable(false);
-            jTableProd.getColumnModel().getColumn(2).setResizable(false);
-        }
-
         btnCancelar.setBackground(new java.awt.Color(153, 0, 0));
         btnCancelar.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,38 +101,57 @@ public class Pedidos extends javax.swing.JFrame {
             }
         });
 
+        tblProd.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Valor", "Modelo", "Ano de Lançamento"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblProd);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblAreadoCliente)
-                .addGap(142, 142, 142))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tblProd, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnRecarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(164, 164, 164)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17)))
-                .addContainerGap(15, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnVoltar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCancelar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(185, 185, 185)
+                .addComponent(lblAreadoCliente)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(45, 45, 45)
                 .addComponent(lblAreadoCliente)
-                .addGap(29, 29, 29)
-                .addComponent(tblProd, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRecarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnRecarregar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -174,7 +160,9 @@ public class Pedidos extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,50 +173,62 @@ public class Pedidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRecarregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecarregarActionPerformed
-        String sql="SELECT * FROM pedido";
-        try{
+        String sql = "SELECT * FROM pedido";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) jTableProd.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
             modelo.setRowCount(0);
-            while(rs.next()){
+            while (rs.next()) {
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
             }
-        }catch(Exception excecao){
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
     }//GEN-LAST:event_btnRecarregarActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         dispose();
-        JFrame func = new Clientes();
-        func.setVisible(true);
-        func.setResizable(false);
+        JFrame janela = new Clientes();
+        janela.setVisible(true);
+        janela.setResizable(false);
+        janela.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-    if (jTableProd.getSelectedRow() != -1) {
-        
-        FuncRmv fa = new FuncRmv();
-        FuncAddDAO dao = new FuncAddDAO();
-        
-        fa.setId_produto((String) jTableProd.getValueAt(jTableProd.getSelectedRow(), 0));
-        dao.removerp(fa);
-        String sql="SELECT * FROM pedido";
-        try{
+        if (tblProd.getSelectedRow() != -1) {
+
+            FuncRmv fa = new FuncRmv();
+            FuncAddDAO dao = new FuncAddDAO();
+
+            fa.setId_produto((String) tblProd.getValueAt(tblProd.getSelectedRow(), 0));
+            dao.removerp(fa);
+            String sql = "SELECT * FROM pedido";
+            try {
+                PreparedStatement pst = con.prepareStatement(sql);
+                ResultSet rs = pst.executeQuery();
+                DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
+                modelo.setRowCount(0);
+                while (rs.next()) {
+                    modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
+                }
+            } catch (Exception excecao) {
+                System.out.println("Erro: " + excecao.getMessage());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um produto para excluir.");
+        }
+        String sql = "SELECT * FROM pedido";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
-            DefaultTableModel modelo = (DefaultTableModel) jTableProd.getModel();
+            DefaultTableModel modelo = (DefaultTableModel) tblProd.getModel();
             modelo.setRowCount(0);
-            while(rs.next()){
+            while (rs.next()) {
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
             }
-        }catch(Exception excecao){
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
-        }
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Selecione um produto para excluir.");
         }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -272,8 +272,8 @@ public class Pedidos extends javax.swing.JFrame {
     private javax.swing.JButton btnRecarregar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTable jTableProd;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAreadoCliente;
-    private javax.swing.JScrollPane tblProd;
+    private javax.swing.JTable tblProd;
     // End of variables declaration//GEN-END:variables
 }

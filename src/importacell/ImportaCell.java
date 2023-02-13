@@ -21,7 +21,7 @@ public class ImportaCell {
         JFrame janela = new Menu();
         janela.setVisible(true);
         janela.setResizable(false);
-        
+        janela.setLocationRelativeTo(null);
     }
     
 }

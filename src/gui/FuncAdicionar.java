@@ -26,20 +26,36 @@ public class FuncAdicionar extends javax.swing.JFrame {
     
     public FuncAdicionar() {
         initComponents();
-        
-        String url="jdbc:mysql://localhost/beto_celulares";
-        String user="root";
-        String pass="Eleoterio2327!";
-        try{
-               con = DriverManager.getConnection(url,user,pass);
-        }catch(Exception excecao){
+        //---------------- inicia a conexão com o MySQL ------------------------
+        String url = "jdbc:mysql://localhost/beto_celulares";
+        String user = "root";
+        String pass = "";
+        try {
+            con = DriverManager.getConnection(url, user, pass);
+        } catch (Exception excecao) {
             System.out.println("Erro: " + excecao.getMessage());
         }
-        String sql="SELECT * FROM produto";
-        try{
+        //----------------------------------------------------------------------
+        //---------------- Atualiza a lista ao entrar --------------------------
+        String sql = "SELECT * FROM produto";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
+            modelo.setRowCount(0);
+            while (rs.next()) {
+                modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
+            }
+        } catch (Exception excecao) {
+            System.out.println("Erro: " + excecao.getMessage());
+        }
+        //----------------------------------------------------------------------
+         //---------------- Atualiza a lista ao entrar --------------------------
+        String query="SELECT * FROM pedido";
+        try{
+            PreparedStatement pst = con.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel modelo = (DefaultTableModel) tblPed.getModel();
             modelo.setRowCount(0);
             while(rs.next()){
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
@@ -70,15 +86,22 @@ public class FuncAdicionar extends javax.swing.JFrame {
         lblCadastro = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
         lblResposta = new javax.swing.JLabel();
+        lblValor1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         lblRemvoer = new javax.swing.JLabel();
         btnRemover = new javax.swing.JButton();
-        btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
         lblResposta2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        tblProd = new javax.swing.JScrollPane();
+        tblPed = new javax.swing.JTable();
+        btnRecarregar2 = new javax.swing.JButton();
+        lblRemvoer1 = new javax.swing.JLabel();
+        lblDesc = new javax.swing.JLabel();
+        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gerenciamento de Produtos");
@@ -105,8 +128,12 @@ public class FuncAdicionar extends javax.swing.JFrame {
         lblValor.setForeground(new java.awt.Color(255, 255, 255));
         lblValor.setText("Valor:");
 
-        txtValor.setText(" R$");
         txtValor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtValor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorActionPerformed(evt);
+            }
+        });
 
         lblCadastro.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         lblCadastro.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,6 +154,10 @@ public class FuncAdicionar extends javax.swing.JFrame {
         lblResposta.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         lblResposta.setForeground(new java.awt.Color(255, 255, 255));
 
+        lblValor1.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        lblValor1.setForeground(new java.awt.Color(255, 255, 255));
+        lblValor1.setText("R$");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -134,7 +165,9 @@ public class FuncAdicionar extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addGap(7, 7, 7)
+                        .addComponent(lblValor1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,7 +178,7 @@ public class FuncAdicionar extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(118, 118, 118)
                         .addComponent(lblCadastro)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(lblResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,7 +204,9 @@ public class FuncAdicionar extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(lblValor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblValor1))
                 .addGap(36, 36, 36)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -198,24 +233,10 @@ public class FuncAdicionar extends javax.swing.JFrame {
             }
         });
 
-        btnVoltar.setBackground(new java.awt.Color(255, 255, 255));
-        btnVoltar.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        btnVoltar.setText("Voltar");
-        btnVoltar.setBorderPainted(false);
-        btnVoltar.setFocusable(false);
-        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVoltarActionPerformed(evt);
-            }
-        });
-
         tblProdutos.setBorder(null);
         tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Modelo", "Ano de Lançamento", "Valor"
@@ -250,10 +271,6 @@ public class FuncAdicionar extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(278, 278, 278))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -295,9 +312,99 @@ public class FuncAdicionar extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addContainerGap(195, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBackground(new java.awt.Color(153, 0, 0));
+
+        tblPed.setBorder(null);
+        tblPed.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Modelo", "Ano de Lançamento", "Valor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblProd.setViewportView(tblPed);
+
+        btnRecarregar2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Recarregar.png"))); // NOI18N
+        btnRecarregar2.setBorderPainted(false);
+        btnRecarregar2.setContentAreaFilled(false);
+        btnRecarregar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecarregar2ActionPerformed(evt);
+            }
+        });
+
+        lblRemvoer1.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        lblRemvoer1.setForeground(new java.awt.Color(255, 255, 255));
+        lblRemvoer1.setText("PEDIDOS ");
+
+        lblDesc.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        lblDesc.setForeground(new java.awt.Color(255, 255, 255));
+        lblDesc.setText("Pedidos realizados pelos clientes da loja:");
+
+        btnVoltar.setBackground(new java.awt.Color(255, 255, 255));
+        btnVoltar.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        btnVoltar.setText("Voltar");
+        btnVoltar.setBorderPainted(false);
+        btnVoltar.setFocusable(false);
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(276, 276, 276)
+                        .addComponent(lblRemvoer1))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(btnRecarregar2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 82, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tblProd, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblDesc)
+                                .addGap(102, 102, 102)))
+                        .addGap(46, 46, 46))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(lblRemvoer1)
+                .addGap(31, 31, 31)
+                .addComponent(lblDesc)
+                .addGap(18, 18, 18)
+                .addComponent(tblProd, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnRecarregar2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -305,14 +412,17 @@ public class FuncAdicionar extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -323,6 +433,7 @@ public class FuncAdicionar extends javax.swing.JFrame {
         JFrame func = new Funcionarios();
         func.setVisible(true);
         func.setResizable(false);
+        func.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
@@ -331,43 +442,71 @@ public class FuncAdicionar extends javax.swing.JFrame {
         funcadiciona.setNome_produto(txtModelo.getText());
         funcadiciona.setAno_produto(txtAno.getText());
         funcadiciona.setValor_produto(txtValor.getText());
-        
+
         if ((txtModelo.getText().isEmpty()) || (txtAno.getText().isEmpty()) || (txtValor.getText().isEmpty())) {
-         lblResposta.setText("Erro! Preencha TODOS os campos!");
-     
+            lblResposta.setText("Erro! Preencha TODOS os campos!");
+
+        } else {
+            // instanciando a classe UsuarioDAO do pacote dao e criando seu objeto dao
+            FuncAddDAO dao = new FuncAddDAO();
+            dao.adiciona(funcadiciona);
+            lblResposta.setText("Modelo cadastrado no sistema.");
+            txtModelo.setText(null);
+            txtAno.setText(null);
+            txtValor.setText("");
         }
-        else {
-         // instanciando a classe UsuarioDAO do pacote dao e criando seu objeto dao
-        FuncAddDAO dao = new FuncAddDAO();
-         dao.adiciona(funcadiciona);
-         lblResposta.setText("Modelo cadastrado no sistema.");
-         txtModelo.setText(null);
-         txtAno.setText(null);
-         txtValor.setText("R$");
+        //---------------- Atualiza a lista ao cadastrar -----------------------
+        String sql = "SELECT * FROM produto";
+        try {
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
+            modelo.setRowCount(0);
+            while (rs.next()) {
+                modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
+            }
+        } catch (Exception excecao) {
+            System.out.println("Erro: " + excecao.getMessage());
         }
+        //----------------------------------------------------------------------
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
         
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         if (tblProdutos.getSelectedRow() != -1) {
-        
-        FuncRmv fa = new FuncRmv();
-        FuncAddDAO dao = new FuncAddDAO();
-        
-        fa.setId_produto((String) tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0));
-        dao.remover(fa);
-        }
-        else {
+
+            FuncRmv fa = new FuncRmv();
+            FuncAddDAO dao = new FuncAddDAO();
+
+            fa.setId_produto((String) tblProdutos.getValueAt(tblProdutos.getSelectedRow(), 0));
+            dao.remover(fa);
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto para excluir.");
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String sql="SELECT * FROM produto";
-        try{
+        String sql = "SELECT * FROM produto";
+        try {
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
             DefaultTableModel modelo = (DefaultTableModel) tblProdutos.getModel();
+            modelo.setRowCount(0);
+            while (rs.next()) {
+                modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
+            }
+        } catch (Exception excecao) {
+            System.out.println("Erro: " + excecao.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnRecarregar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecarregar2ActionPerformed
+        String sql="SELECT * FROM pedido";
+        try{
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel modelo = (DefaultTableModel) tblPed.getModel();
             modelo.setRowCount(0);
             while(rs.next()){
                 modelo.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getNString(3), rs.getString(4)});
@@ -375,8 +514,11 @@ public class FuncAdicionar extends javax.swing.JFrame {
         }catch(Exception excecao){
             System.out.println("Erro: " + excecao.getMessage());
         }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRecarregar2ActionPerformed
+
+    private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -419,20 +561,27 @@ public class FuncAdicionar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnRecarregar2;
     private javax.swing.JButton btnRemover;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAno;
     private javax.swing.JLabel lblCadastro;
+    private javax.swing.JLabel lblDesc;
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblRemvoer;
+    private javax.swing.JLabel lblRemvoer1;
     private javax.swing.JLabel lblResposta;
     private javax.swing.JLabel lblResposta2;
     private javax.swing.JLabel lblValor;
+    private javax.swing.JLabel lblValor1;
+    private javax.swing.JTable tblPed;
+    private javax.swing.JScrollPane tblProd;
     private javax.swing.JTable tblProdutos;
     private javax.swing.JTextField txtAno;
     private javax.swing.JTextField txtModelo;

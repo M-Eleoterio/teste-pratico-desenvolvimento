@@ -32,13 +32,14 @@ public class Clientes extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblAreadoFuncionario = new javax.swing.JLabel();
-        btnAdd = new javax.swing.JButton();
-        btnAdd1 = new javax.swing.JButton();
+        btnComprar = new javax.swing.JButton();
+        btnPedidos = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
+        btnHist = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(155, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(102, 0, 102));
         jPanel1.setBorder(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Cliente.png"))); // NOI18N
@@ -47,25 +48,25 @@ public class Clientes extends javax.swing.JFrame {
         lblAreadoFuncionario.setForeground(new java.awt.Color(255, 255, 255));
         lblAreadoFuncionario.setText("ÁREA DO CLIENTE");
 
-        btnAdd.setBackground(new java.awt.Color(255, 255, 255));
-        btnAdd.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        btnAdd.setText("Comprar");
-        btnAdd.setBorderPainted(false);
-        btnAdd.setFocusPainted(false);
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnComprar.setBackground(new java.awt.Color(255, 255, 255));
+        btnComprar.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        btnComprar.setText("Comprar");
+        btnComprar.setBorderPainted(false);
+        btnComprar.setFocusPainted(false);
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnComprarActionPerformed(evt);
             }
         });
 
-        btnAdd1.setBackground(new java.awt.Color(255, 255, 255));
-        btnAdd1.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        btnAdd1.setText("Acompanhar Pedidos");
-        btnAdd1.setBorderPainted(false);
-        btnAdd1.setFocusPainted(false);
-        btnAdd1.addActionListener(new java.awt.event.ActionListener() {
+        btnPedidos.setBackground(new java.awt.Color(255, 255, 255));
+        btnPedidos.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        btnPedidos.setText("Acompanhar Pedidos");
+        btnPedidos.setBorderPainted(false);
+        btnPedidos.setFocusPainted(false);
+        btnPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdd1ActionPerformed(evt);
+                btnPedidosActionPerformed(evt);
             }
         });
 
@@ -77,6 +78,17 @@ public class Clientes extends javax.swing.JFrame {
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVoltarActionPerformed(evt);
+            }
+        });
+
+        btnHist.setBackground(new java.awt.Color(255, 255, 255));
+        btnHist.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        btnHist.setText("Histórico de Compras");
+        btnHist.setBorderPainted(false);
+        btnHist.setFocusPainted(false);
+        btnHist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistActionPerformed(evt);
             }
         });
 
@@ -93,8 +105,9 @@ public class Clientes extends javax.swing.JFrame {
                         .addGap(91, 91, 91)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblAreadoFuncionario)
-                            .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(btnPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnComprar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnHist, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(89, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -109,10 +122,12 @@ public class Clientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
-                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(btnHist, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -131,26 +146,37 @@ public class Clientes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         setVisible(false);
         JFrame janela = new Produtos();
         janela.setVisible(true);
         janela.setResizable(false);
-    }//GEN-LAST:event_btnAddActionPerformed
+        janela.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnComprarActionPerformed
 
-    private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
+    private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
         setVisible(false);
         JFrame janela = new Pedidos();
         janela.setVisible(true);
         janela.setResizable(false);
-    }//GEN-LAST:event_btnAdd1ActionPerformed
+        janela.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnPedidosActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         dispose();
         JFrame menu = new Menu();
         menu.setVisible(true);
         menu.setResizable(false);
+        menu.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnHistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistActionPerformed
+        dispose();
+        JFrame menu = new Historico();
+        menu.setVisible(true);
+        menu.setResizable(false);
+        menu.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnHistActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,8 +214,9 @@ public class Clientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnAdd1;
+    private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnHist;
+    private javax.swing.JButton btnPedidos;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -10,41 +10,52 @@ package modelo;
  * @author asa40
  */
 public class ProdAdd {
-    String id_produto;
-    String nome_produto;
-    String ano_produto;
-    String valor_produto;
+    String id_pedido;
+    String nome_pedido;
+    String ano_pedido;
+    String valor_pedido;
+    String status_pedido;
 
-    public String getId_produto() {
-        return id_produto;
+    public String getId_pedido() {
+        return id_pedido;
     }
 
-    public void setId_produto(String id_produto) {
-        this.id_produto = id_produto;
+    public void setId_pedido(String id_pedido) {
+        this.id_pedido = id_pedido;
     }
 
-    public String getAno_produto() {
-        return ano_produto;
+    public String getNome_pedido() {
+        return nome_pedido;
     }
 
-    public void setAno_produto(String ano_produto) {
-        this.ano_produto = ano_produto;
+    public void setNome_pedido(String nome_pedido) {
+        this.nome_pedido = nome_pedido;
     }
 
-    public String getNome_produto() {
-        return nome_produto;
+    public String getAno_pedido() {
+        return ano_pedido;
     }
 
-    public void setNome_produto(String nome_produto) {
-        this.nome_produto = nome_produto;
+    public void setAno_pedido(String ano_pedido) {
+        this.ano_pedido = ano_pedido;
     }
 
-    public String getValor_produto() {
-        return valor_produto;
+    public String getValor_pedido() {
+        return valor_pedido;
     }
 
-    public void setValor_produto(String valor_produto) {
-        this.valor_produto = valor_produto;
+    public void setValor_pedido(String valor_pedido) {
+        this.valor_pedido = valor_pedido;
     }
+
+    public String getStatus_pedido() {
+        return status_pedido;
+    }
+
+    public void setStatus_pedido(String status_pedido) {
+        this.status_pedido = status_pedido;
+    }
+
+ 
     
 }

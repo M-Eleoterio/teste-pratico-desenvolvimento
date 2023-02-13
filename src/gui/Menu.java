@@ -133,7 +133,7 @@ public class Menu extends javax.swing.JFrame {
         JFrame janela = new Funcionarios();
         janela.setVisible(true);
         janela.setResizable(false);
-        
+        janela.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_FuncionarioActionPerformed
 
     private void btn_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ClienteActionPerformed
@@ -141,6 +141,7 @@ public class Menu extends javax.swing.JFrame {
         JFrame janela = new Clientes();
         janela.setVisible(true);
         janela.setResizable(false);
+        janela.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_ClienteActionPerformed
 
     /**

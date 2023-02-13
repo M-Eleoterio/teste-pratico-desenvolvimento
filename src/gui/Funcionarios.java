@@ -34,6 +34,7 @@ public class Funcionarios extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         lblAreadoFuncionario = new javax.swing.JLabel();
         lblImagem = new javax.swing.JLabel();
+        btnAdd1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -68,19 +69,21 @@ public class Funcionarios extends javax.swing.JFrame {
 
         lblImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Funcionario.png"))); // NOI18N
 
+        btnAdd1.setBackground(new java.awt.Color(255, 255, 255));
+        btnAdd1.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        btnAdd1.setText("Histórico de Vendas");
+        btnAdd1.setBorderPainted(false);
+        btnAdd1.setFocusPainted(false);
+        btnAdd1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdd1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(lblAreadoFuncionario))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
-                        .addComponent(btnAdd)))
-                .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,6 +93,17 @@ public class Funcionarios extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(lblImagem)
                         .addGap(139, 139, 139))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(lblAreadoFuncionario))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,9 +112,11 @@ public class Funcionarios extends javax.swing.JFrame {
                 .addComponent(lblAreadoFuncionario)
                 .addGap(18, 18, 18)
                 .addComponent(lblImagem)
-                .addGap(48, 48, 48)
+                .addGap(51, 51, 51)
                 .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -124,6 +140,7 @@ public class Funcionarios extends javax.swing.JFrame {
         JFrame janela = new FuncAdicionar();
         janela.setVisible(true);
         janela.setResizable(false);
+        janela.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -131,7 +148,16 @@ public class Funcionarios extends javax.swing.JFrame {
         JFrame menu = new Menu();
         menu.setVisible(true);
         menu.setResizable(false);
+        menu.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
+        setVisible(false);
+        JFrame janela = new HistoricoFunc();
+        janela.setVisible(true);
+        janela.setResizable(false);
+        janela.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnAdd1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,6 +196,7 @@ public class Funcionarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAdd1;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAreadoFuncionario;
